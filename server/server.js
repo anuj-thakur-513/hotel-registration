@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+const roomRouter = require('./routes/rooms')
 
 require('dotenv').config()
 
@@ -12,6 +13,9 @@ app.use(cors())
 
 // bodyparser middleware
 app.use(bodyParser.json())
+
+// routes
+app.use('/api/v1/rooms', roomRouter)
 
 mongoose
   .connect(DB_URL, {
