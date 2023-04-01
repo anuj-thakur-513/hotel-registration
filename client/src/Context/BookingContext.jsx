@@ -45,7 +45,7 @@ const BookingContextProvider = ({ children }) => {
     } else {
       const json = await response.json()
       console.log(json)
-      setBooking(users.concat(json))
+      setBooking((booking) => booking.concat(json))
       callback(true)
     }
   }
