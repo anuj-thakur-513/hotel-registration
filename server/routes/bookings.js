@@ -7,13 +7,14 @@ const {
   deleteBooking,
 } = require('../controllers/booking')
 const bookingAvailable = require('../middleware/bookingAvailable')
+const bookingConflict = require('../middleware/bookingConflict')
 
 const bookingRouter = express.Router()
 
 bookingRouter.get('/', getAllBookings)
 bookingRouter.get('/:id', bookingAvailable, getBookingById)
-bookingRouter.post('/', postBooking)
-bookingRouter.put('/:id', bookingAvailable, updateBooking)
+bookingRouter.post('/', bookingConflict, postBooking)
+bookingRouter.put('/:id', bookingConflict, updateBooking)
 bookingRouter.delete('/:id', bookingAvailable, deleteBooking)
 
 module.exports = bookingRouter

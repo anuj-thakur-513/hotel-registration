@@ -1,4 +1,11 @@
 const Booking = require('../models/booking')
+require('dotenv').config()
+// const mailgun = require('mailgun-js')
+
+// const mg = mailgun({
+//   apiKey: process.env.MAILGUN_API_KEY,
+//   domain: process.env.MAILDUN_DOMAIN,
+// })
 
 const getAllBookings = async (req, res) => {
   let bookings
@@ -25,44 +32,7 @@ const getBookingById = async (req, res) => {
 }
 
 const postBooking = async (req, res) => {
-  /**
-   * Searches for existing user bookings that overlap with the requested time slot (req.body.startTime and req.body.endTime)
-   * If any overlapping bookings are found, returns an error
-   * Otherwise, creates a new User with the request details and saves it
-   * Responds with the new User or an error message if anything went wrong
-   */
   try {
-    const existingBooking = await Booking.find({
-      roomNumber: req.body.roomNumber,
-      $or: [
-        {
-          $and: [
-            { startTime: { $lte: req.body.startTime } },
-            { endTime: { $gt: req.body.startTime } },
-          ],
-        },
-        {
-          $and: [
-            { startTime: { $lt: req.body.endTime } },
-            { endTime: { $gte: req.body.endTime } },
-          ],
-        },
-        {
-          $and: [
-            { startTime: { $gte: req.body.startTime } },
-            { endTime: { $lte: req.body.endTime } },
-          ],
-        },
-      ],
-    })
-
-    if (existingBooking.length !== 0) {
-      return res.status(409).json({
-        message:
-          'There is already a booking for this room during the selected time period.',
-      })
-    }
-
     const booking = new Booking({
       email: req.body.email,
       roomNumber: req.body.roomNumber,
@@ -72,6 +42,27 @@ const postBooking = async (req, res) => {
     })
 
     const newBooking = await booking.save()
+    // await transporter.sendMail({
+    //   to: req.body.email,
+    //   from: 'YOUR_SENDGRID_VERIFIED_EMAIL',
+    //   subject: 'Email conformation of your booking',
+    //   html: `
+    //                 <p>Your Room Number: ${req.body.roomNumber}</p>
+    //                 <p>Your Room Type: ${req.body.roomType}</p>`,
+    // })
+
+    // const data = {
+    //   from: 'Best Hotel <nityam0213@gmail.com>',
+    //   to: `${req.body.email}`,
+    //   subject: 'Email conformation of your booking',
+    //   html: `
+    //                   <p>Your Room Number: ${req.body.roomNumber}</p>
+    //                 <p>Your Room Type: ${req.body.roomType}</p>`,
+    // }
+    // await mg.messages().send(data, function (error, body) {
+    //   //
+    // })
+
     res.status(201).json(newBooking)
   } catch (err) {
     res.status(400).json({ message: err.message })
