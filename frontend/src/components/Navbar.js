@@ -5,7 +5,7 @@ export default function Navbar() {
     <>
       <nav
         className="navbar navbar-light justify-content-center fs-3 mb-5"
-        style={{ backgroundColor: '#b2b2ac' }}
+        style={{ backgroundColor: '#000000', color: '#ffffff' }}
       >
         <strong>ADMIN PANEL</strong>
       </nav>
