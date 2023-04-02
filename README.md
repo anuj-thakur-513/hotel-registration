@@ -2,13 +2,31 @@
 
 A complete admin-facing solution for the management of rooms in a Hotel.
 
-### REQUIRENMENTS
+# Setup
+
+- Server: Node server
+- Frontend: CRA react frontend
+- Client: vite react app [refactoring frontend]
+
+To start the server:
+
+- cd server
+- npm i
+- npm start
+
+To start frontend:
+
+- cd frontend
+- npm i
+- npm start
+
+### REQUIREMENTS
 
 - Hotel can have multiple rooms of multiple types.
 - Each room type has a different type of pricing. Example:
   - Type A(Single Room): 100 Rs per hour
-  - Type A(Double Room): 200 Rs per hour
-  - Type A(Suite): 300 Rs per hour
+  - Type B(Double Room): 200 Rs per hour
+  - Type C(Suite): 300 Rs per hour
 - Hotel can have multiple room of any type. Example:
   - 10 Single Rooms
   - 5 Double Rooms
