@@ -1,5 +1,5 @@
-const Booking = require('../models/booking')
-require('dotenv').config()
+const Booking = require("../models/booking");
+require("dotenv").config();
 // const mailgun = require('mailgun-js')
 
 // const mg = mailgun({
@@ -8,28 +8,28 @@ require('dotenv').config()
 // })
 
 const getAllBookings = async (req, res) => {
-  let bookings
+  let bookings;
   try {
-    bookings = await Booking.find()
-    res.status(200).json(bookings)
+    bookings = await Booking.find();
+    res.status(200).json(bookings);
   } catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message });
   }
-}
+};
 
 const getBookingById = async (req, res) => {
-  let bookings
+  let bookings;
   try {
-    bookings = await Booking.findById(req.params.id)
+    bookings = await Booking.findById(req.params.id);
     if (bookings == null) {
-      res.status(404).json({ message: 'Cannot find booking' })
+      res.status(404).json({ message: "Cannot find booking" });
     }
   } catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message });
   }
   // if booking is not null, send it back
-  res.status(200).json(bookings)
-}
+  res.status(200).json(bookings);
+};
 
 const postBooking = async (req, res) => {
   try {
@@ -39,9 +39,9 @@ const postBooking = async (req, res) => {
       roomType: req.body.roomType,
       startTime: req.body.startTime,
       endTime: req.body.endTime,
-    })
+    });
 
-    const newBooking = await booking.save()
+    const newBooking = await booking.save();
     // await transporter.sendMail({
     //   to: req.body.email,
     //   from: 'YOUR_SENDGRID_VERIFIED_EMAIL',
@@ -63,16 +63,16 @@ const postBooking = async (req, res) => {
     //   //
     // })
 
-    res.status(201).json(newBooking)
+    res.status(201).json(newBooking);
   } catch (err) {
-    res.status(400).json({ message: err.message })
+    res.status(400).json({ message: err.message });
   }
-}
+};
 
 const updateBooking = async (req, res) => {
-  const { email, roomNumber, roomType, startTime, endTime } = req.body
+  const { email, roomNumber, roomType, startTime, endTime } = req.body;
   if (!email || !roomNumber || !roomType || !startTime || !endTime) {
-    res.status(400).json({ message: 'Please provide all required fields' })
+    res.status(400).json({ message: "Please provide all required fields" });
   }
 
   try {
@@ -86,21 +86,21 @@ const updateBooking = async (req, res) => {
         endTime,
       },
       { new: true }
-    )
-    res.status(200).json(updatedBooking)
+    );
+    res.status(200).json(updatedBooking);
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(500).json({ message: err.message });
   }
-}
+};
 
 const deleteBooking = async (req, res) => {
   try {
-    await Booking.findByIdAndRemove(req.params.id)
-    res.json({ message: 'Booking deleted' })
+    await Booking.findByIdAndRemove(req.params.id);
+    res.json({ message: "Booking deleted" });
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(500).json({ message: err.message });
   }
-}
+};
 
 module.exports = {
   getAllBookings,
@@ -108,4 +108,4 @@ module.exports = {
   getBookingById,
   updateBooking,
   deleteBooking,
-}
+};
