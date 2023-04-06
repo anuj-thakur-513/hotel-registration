@@ -8,13 +8,13 @@ A complete admin-facing solution for the management of rooms in a Hotel.
 - Frontend: CRA react frontend
 - Client: vite react app [refactoring frontend]
 
-To start the server:
+### To start the server:
 
 - cd server
 - npm i
 - npm start
 
-To start frontend:
+### To start frontend:
 
 - cd frontend
 - npm i
