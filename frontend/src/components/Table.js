@@ -93,7 +93,7 @@ export default function Table(props) {
   };
   const filteredUsers = users.filter((user) => {
     if (selectedOption === "roomNumber") {
-      return user.roomNumber === props.inputValue;
+      return user.roomNumber === parseInt(props.inputValue, 10);
     } else if (selectedOption === "roomType") {
       return user.roomType === props.inputValue;
     } else {
